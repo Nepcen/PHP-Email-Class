@@ -24,7 +24,7 @@ class Email
         $this->smtpSecure = $smtpSecure;
     }
 
-    public function sendMail($to, $subject, $body, $from, $fromName)
+    public function sendMail($to, $subject, $body, $from, $fromName, $attachments = [])
     {
         try {
             $mail = new PHPMailer;
@@ -47,6 +47,12 @@ class Email
             $mail->Body    = $body;
             $mail->AltBody = $body;
 
+            if (!empty($attachments)) {
+                foreach ($attachments as $a) {
+                    $mail->addAttachment($a);
+                }
+            }
+
             if (!$mail->send()) {
                 throw new Exception('Email could not be sent.');
             }
@@ -64,5 +70,6 @@ $subject = "";
 $body = "";
 $from = "";
 $fromName = "";
+$attachments = [];
 
-$email->sendMail($to, $subject, $body, $from, $fromName);
+$email->sendMail($to, $subject, $body, $from, $fromName, $attachments);
