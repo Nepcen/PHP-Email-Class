@@ -46,6 +46,8 @@ class Email
             $mail = new PHPMailer;
 
             $mail->isSMTP();
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
             $mail->Host = $this->smtpHost;
             $mail->SMTPAuth = true;
             $mail->Username = $this->smtpUsername;
